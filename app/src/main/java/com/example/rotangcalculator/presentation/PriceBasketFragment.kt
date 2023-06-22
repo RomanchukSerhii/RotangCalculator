@@ -9,8 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.lifecycle.ViewModelProvider
 import com.example.rotangcalculator.R
 import com.example.rotangcalculator.databinding.FragmentPriceBasketBinding
+import com.example.rotangcalculator.presentation.viewmodels.PriceBasketViewModel
+import com.example.rotangcalculator.presentation.viewmodels.ViewModelFactory
+import javax.inject.Inject
 import kotlin.math.ceil
 
 const val PREF_PROGRESS = "PREF_PROGRESS"
@@ -23,6 +27,22 @@ class PriceBasketFragment : Fragment() {
     private var _binding: FragmentPriceBasketBinding? = null
     private val binding: FragmentPriceBasketBinding
         get() = _binding ?: throw RuntimeException("FragmentPriceBasketBinding is null")
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[PriceBasketViewModel::class.java]
+    }
+
+    private val component by lazy {
+        (requireActivity().application as App).component
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

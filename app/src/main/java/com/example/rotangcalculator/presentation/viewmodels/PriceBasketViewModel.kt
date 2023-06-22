@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.rotangcalculator.presentation.viewmodels.Result
+import javax.inject.Inject
 import kotlin.math.ceil
 
-class PriceBasketViewModel : ViewModel() {
+class PriceBasketViewModel @Inject constructor(): ViewModel() {
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> = _state
 
