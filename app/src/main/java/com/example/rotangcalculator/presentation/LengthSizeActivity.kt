@@ -1,11 +1,11 @@
-package com.example.rotangcalculator
+package com.example.rotangcalculator.presentation
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.rotangcalculator.R
 import com.example.rotangcalculator.databinding.ActivityLengthSizeBinding
-import java.lang.Math.ceil
 
 class LengthSizeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLengthSizeBinding

@@ -13,16 +13,16 @@
             android:name=".TestBottomNavActivity"
             android:exported="false" />
         <activity
-            android:name=".ResultActivity"
+            android:name=".presentation.ResultActivity"
             android:exported="false" />
         <activity
-            android:name=".PriceActivity"
+            android:name=".presentation.PriceActivity"
             android:exported="false" />
         <activity
-            android:name=".LengthSizeActivity"
+            android:name=".presentation.LengthSizeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

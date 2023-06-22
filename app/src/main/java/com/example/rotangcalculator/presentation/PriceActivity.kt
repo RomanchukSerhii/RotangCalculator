@@ -1,17 +1,16 @@
-package com.example.rotangcalculator
+package com.example.rotangcalculator.presentation
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
+import com.example.rotangcalculator.R
 import com.example.rotangcalculator.databinding.ActivityPriceBinding
 import kotlin.math.ceil
-import kotlin.properties.Delegates.notNull
 
 
 const val PREF_PROGRESS = "PREF_PROGRESS"
