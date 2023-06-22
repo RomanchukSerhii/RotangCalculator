@@ -23,6 +23,21 @@ class ChooseCalculatorFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setClickListeners()
+    }
+
+    private fun setClickListeners() {
+        binding.buttonPrice.setOnClickListener {
+            val fragment = PriceBasketFragment.newInstance()
+            parentFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+        }
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
