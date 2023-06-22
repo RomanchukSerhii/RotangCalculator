@@ -13,7 +13,7 @@ import com.example.rotangcalculator.databinding.ActivityPriceBinding
 import kotlin.math.ceil
 
 
-const val PREF_PROGRESS = "PREF_PROGRESS"
+
 
 class PriceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPriceBinding
