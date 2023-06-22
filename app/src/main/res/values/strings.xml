@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Rotang Calculator</string>
+    <string name="length_button_description">Кнопка для розрахунку довжини лінії</string>
+    <string name="length_line">Довжина смужки</string>
+    <string name="price">Ціна кошика</string>
+    <string name="divider">Разделитель</string>
+    <string name="choose_calculator">Обери калькулятор</string>
+    <string name="back_description">Кнопка повернутися назад</string>
+    <string name="result">Результат</string>
+    <string name="price_basket">Ціна кошика</string>
+    <string name="height">Висота (см)</string>
+    <string name="width_basket">Ширина (см)</string>
+    <string name="length_basket">Довжина (см)</string>
+    <string name="with_cover">Потрібна кришка?</string>
+    <string name="to_calculate">Розархувати</string>
+    <string name="ic_length_description">Іконка довжини смужки</string>
+    <string name="hint_high_diameter">Окружність зверху (см)</string>
+    <string name="hint_lower_diameter">Окружність знизу (см)</string>
+    <string name="hint_length">Довжина стояка (см)</string>
+    <string name="hint_number">Кількість стояків</string>
+    <string name="hint_width">Ширина ротанга (см)</string>
+    <string name="error">Заповніть поле</string>
+    <string name="title_main">Обери калькулятор</string>
+    <string name="clear_button">Кнопка для очищення всіх значень</string>
+    <string name="coefficient">Коефіцієнт: %.2f</string>
+</resources>
