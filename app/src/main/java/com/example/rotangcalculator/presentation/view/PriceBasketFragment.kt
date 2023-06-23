@@ -1,4 +1,4 @@
-package com.example.rotangcalculator.presentation
+package com.example.rotangcalculator.presentation.view
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,6 +12,7 @@ import android.widget.SeekBar
 import androidx.lifecycle.ViewModelProvider
 import com.example.rotangcalculator.R
 import com.example.rotangcalculator.databinding.FragmentPriceBasketBinding
+import com.example.rotangcalculator.presentation.App
 import com.example.rotangcalculator.presentation.viewmodels.PriceBasketViewModel
 import com.example.rotangcalculator.presentation.viewmodels.ViewModelFactory
 import com.example.rotangcalculator.presentation.viewmodels.Error

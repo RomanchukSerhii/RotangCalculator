@@ -1,4 +1,4 @@
-package com.example.rotangcalculator.presentation
+package com.example.rotangcalculator.presentation.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

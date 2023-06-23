@@ -51,10 +51,6 @@ class LengthSizeActivity : AppCompatActivity() {
         val turnover = length / (number * width)
         val result = (kotlin.math.ceil(size * turnover)).toInt()
         val tempText = "$result см"
-
-        val intent = Intent(applicationContext, ResultActivity::class.java)
-        intent.putExtra("result", tempText)
-        startActivity(intent)
     }
 
     private fun clearAllField() = with(binding) {

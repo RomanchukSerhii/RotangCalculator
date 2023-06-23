@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".presentation.PriceActivity">
+    tools:context=".presentation.view.LengthSizeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -35,23 +35,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:contentDescription="@string/back_description"
-                android:onClick="onClickBack"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_arrow_back"
-                tools:ignore="TouchTargetSizeCheck" />
+                app:srcCompat="@drawable/ic_arrow_back" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/price_basket"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="18sp"
-                android:textColor="@color/content"
                 android:layout_marginBottom="4dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/length_line"
+                android:textColor="@color/content"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icBack"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,25 +59,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:onClick="onClickClear"
-                android:contentDescription="@string/clear_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_cleaning"
-                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                app:srcCompat="@drawable/ic_cleaning" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilHeight"
+        android:id="@+id/tilHighDiameter"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
+        android:contentDescription="@string/hint_high_diameter"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
         app:boxBackgroundMode="outline"
         app:boxStrokeColor="#845442"
         app:endIconMode="clear_text"
@@ -87,45 +83,46 @@
         app:hintTextColor="#845442">
 
         <EditText
-            android:id="@+id/etHeight"
+            android:id="@+id/etHighDiameter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_regular"
-            android:hint="@string/height"
+            android:hint="@string/hint_high_diameter"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
             android:textCursorDrawable="@drawable/color_cursor"
-            android:textSize="14sp"
+            android:textSize="15sp"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilWidth"
+        android:id="@+id/tilLowerDiameter"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:contentDescription="@string/hint_lower_diameter"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
         app:boxStrokeColor="#845442"
         app:endIconMode="clear_text"
         app:helperTextTextColor="@color/content"
         app:hintTextColor="#845442">
 
         <EditText
-            android:id="@+id/etWidth"
+            android:id="@+id/etLowerDiameter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_regular"
-            android:hint="@string/width_basket"
+            android:hint="@string/hint_lower_diameter"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
             android:textCursorDrawable="@drawable/color_cursor"
-            android:textSize="14sp"
+            android:textSize="15sp"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,8 +132,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:contentDescription="@string/hint_length"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
         app:boxStrokeColor="#845442"
         app:endIconMode="clear_text"
         app:helperTextTextColor="@color/content"
@@ -147,62 +145,126 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_regular"
-            android:hint="@string/length_basket"
+            android:hint="@string/hint_length"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="15sp"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNumber"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/hint_number"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        app:boxStrokeColor="#845442"
+        app:endIconMode="clear_text"
+        app:helperTextTextColor="@color/content"
+        app:hintTextColor="#845442">
+
+        <EditText
+            android:id="@+id/etNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="@string/hint_number"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="15sp"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilWidth"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/hint_width"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        app:boxStrokeColor="#845442"
+        app:endIconMode="clear_text"
+        app:helperTextTextColor="@color/content"
+        app:hintTextColor="#845442">
+
+        <EditText
+            android:id="@+id/etWidth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="@string/hint_width"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
             android:textCursorDrawable="@drawable/color_cursor"
-            android:textSize="14sp"
+            android:textSize="15sp"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <Button
+            android:id="@+id/btResult"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="#845442"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/to_calculate"
+            android:textColor="#F9F4EA"
+            android:textStyle="bold"
+            app:cornerRadius="8dp" 
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/save_button"/>
+        
+        <ImageView
+            android:id="@+id/save_button"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_save"
+            android:layout_marginEnd="16dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintTop_toTopOf="@id/btResult"
+            app:layout_constraintBottom_toBottomOf="@id/btResult"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btResult"/>
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <TextView
-        android:id="@+id/coefficientTextView"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="4dp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="@string/coefficient"
-        android:textColor="@color/content"
-        android:textSize="14sp"/>
-
-    <SeekBar
-        android:id="@+id/seekBar"
-        style="@style/MySeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:max="100"
-        android:progress="45"/>
-
-    <CheckBox
-        android:id="@+id/withCover"
+        android:id="@+id/textViewResult"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="18dp"
-        android:text="@string/with_cover"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
         android:textColor="@color/content"
-        android:buttonTint="@color/content"/>
+        android:textSize="56sp"
+        tools:text="12 345 грн" />
 
-    <Button
-        android:id="@+id/btResult"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#845442"
-        android:fontFamily="@font/roboto_regular"
-        android:onClick="onClickResult"
-        android:text="@string/to_calculate"
-        android:textColor="#F9F4EA"
-        android:textStyle="bold"
-        app:cornerRadius="8dp" />
+        android:layout_height="10dp" />
 
 </LinearLayout>

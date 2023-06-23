@@ -1,4 +1,4 @@
-package com.example.rotangcalculator.presentation
+package com.example.rotangcalculator.presentation.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -31,6 +31,14 @@ class ChooseCalculatorFragment : Fragment() {
     private fun setClickListeners() {
         binding.buttonPrice.setOnClickListener {
             val fragment = PriceBasketFragment.newInstance()
+            parentFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+        }
+
+        binding.buttonLengthSize.setOnClickListener {
+            val fragment = LengthSizeFragment.newInstance()
             parentFragmentManager.beginTransaction()
                 .addToBackStack(null)
                 .replace(R.id.fragment_container, fragment)
