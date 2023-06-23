@@ -1,10 +1,11 @@
-package com.example.rotangcalculator.data
+package com.example.rotangcalculator.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.rotangcalculator.data.database.NoteItemDbModel
 import com.example.rotangcalculator.domain.models.NoteItem
 
 @Dao

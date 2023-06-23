@@ -1,4 +1,4 @@
-package com.example.rotangcalculator.data
+package com.example.rotangcalculator.data.database
 
 import android.app.Application
 import androidx.room.Database

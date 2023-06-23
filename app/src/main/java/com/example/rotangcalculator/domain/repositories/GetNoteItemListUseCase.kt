@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.rotangcalculator.domain.models.NoteItem
 
 class GetNoteItemListUseCase(
-    private val repository: NoteItemRepository
+    private val repository: NoteListRepository
 ) {
     operator fun invoke(): LiveData<List<NoteItem>> {
         return repository.getNoteItemList()

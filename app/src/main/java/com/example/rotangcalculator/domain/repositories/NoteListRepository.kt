@@ -3,7 +3,7 @@ package com.example.rotangcalculator.domain.repositories
 import androidx.lifecycle.LiveData
 import com.example.rotangcalculator.domain.models.NoteItem
 
-interface NoteItemRepository {
+interface NoteListRepository {
 
     fun addNoteItem(noteItem: NoteItem)
 
