@@ -2,8 +2,9 @@ package com.example.rotangcalculator.data
 
 import com.example.rotangcalculator.data.database.NoteItemDbModel
 import com.example.rotangcalculator.domain.models.NoteItem
+import javax.inject.Inject
 
-class NoteItemMapper {
+class NoteItemMapper @Inject constructor(){
 
     fun mapEntityToDbModel(noteItem: NoteItem): NoteItemDbModel {
         return NoteItemDbModel(

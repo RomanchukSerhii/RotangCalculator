@@ -12,7 +12,7 @@ import com.example.rotangcalculator.domain.models.NoteItem
 interface NoteListDao {
 
     @Query("SELECT * FROM notes")
-    fun getNoteList(): LiveData<List<NoteItem>>
+    fun getNoteList(): LiveData<List<NoteItemDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addNoteItem(noteItemDbModel: NoteItemDbModel)
