@@ -3,19 +3,20 @@ package com.example.rotangcalculator.presentation
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.SeekBar
 import androidx.lifecycle.ViewModelProvider
 import com.example.rotangcalculator.R
 import com.example.rotangcalculator.databinding.FragmentPriceBasketBinding
 import com.example.rotangcalculator.presentation.viewmodels.PriceBasketViewModel
 import com.example.rotangcalculator.presentation.viewmodels.ViewModelFactory
+import com.example.rotangcalculator.presentation.viewmodels.Error
+import com.example.rotangcalculator.presentation.viewmodels.Result
 import javax.inject.Inject
-import kotlin.math.ceil
 
 const val PREF_PROGRESS = "PREF_PROGRESS"
 
@@ -58,11 +59,23 @@ class PriceBasketFragment : Fragment() {
         setSeekBarProgress()
         updateCoefficient(binding.seekBar)
         setListeners()
+        observerViewModel()
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun observerViewModel() {
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is Error -> setEditTextError()
+                is Result -> {
+                    binding.textViewResult.text = state.result
+                }
+            }
+        }
     }
 
     private fun setSeekBarProgress() {
@@ -72,45 +85,84 @@ class PriceBasketFragment : Fragment() {
     }
 
     private fun setListeners() {
-        binding.icClear.setOnClickListener {
-            clearAllField()
+        with(binding) {
+            icClear.setOnClickListener {
+                clearAllField()
+            }
+
+            btResult.setOnClickListener {
+                viewModel.calculate(
+                    cover = if (withCover.isChecked) 2 else 1,
+                    heightField = etHeight.text.toString(),
+                    widthField = etWidth.text.toString(),
+                    lengthField = etLength.text.toString(),
+                    coefficient = (progres + 100).toDouble()
+                )
+                hideKeyboard()
+            }
+
+            withCover.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    viewModel.calculate(
+                        cover = if (withCover.isChecked) 2 else 1,
+                        heightField = etHeight.text.toString(),
+                        widthField = etWidth.text.toString(),
+                        lengthField = etLength.text.toString(),
+                        coefficient = (progres + 100).toDouble()
+                    )
+                    hideKeyboard()
+                } else {
+                    viewModel.calculate(
+                        cover = if (withCover.isChecked) 2 else 1,
+                        heightField = etHeight.text.toString(),
+                        widthField = etWidth.text.toString(),
+                        lengthField = etLength.text.toString(),
+                        coefficient = (progres + 100).toDouble()
+                    )
+                    hideKeyboard()
+                }
+            }
+
+            seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    if (seekBar != null) {
+                        updateCoefficient(seekBar)
+                    }
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    if (seekBar != null) {
+                        progres = seekBar.progress
+                        preferences.edit()
+                            .putInt(PREF_PROGRESS, progres)
+                            .apply()
+                        viewModel.calculate(
+                            cover = if (withCover.isChecked) 2 else 1,
+                            heightField = etHeight.text.toString(),
+                            widthField = etWidth.text.toString(),
+                            lengthField = etLength.text.toString(),
+                            coefficient = (progres + 100).toDouble()
+                        )
+                        hideKeyboard()
+                    }
+                }
+            })
+
+            icBack.setOnClickListener {
+                requireActivity().supportFragmentManager.popBackStack()
+            }
         }
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (seekBar != null) {
-                    updateCoefficient(seekBar)
-                }
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                if (seekBar != null) {
-                    progres = seekBar.progress
-                    preferences.edit()
-                        .putInt(PREF_PROGRESS, progres)
-                        .apply()
-                }
-            }
-        })
     }
 
     private fun updateCoefficient(seekBar: SeekBar) {
         val coefficient = (seekBar.progress + 100).toDouble()
         binding.coefficientTextView.text = getString(R.string.coefficient, coefficient / 100)
-    }
-
-    private fun calculatePrice(): String {
-        with(binding) {
-            val cover = if (withCover.isChecked) 2 else 1
-            val height = etHeight.text.toString().toDouble()
-            val width = etWidth.text.toString().toDouble()
-            val length = etLength.text.toString().toDouble()
-            val coefficient = (progres + 100).toDouble()
-            val result =
-                (ceil((height * width * 2 + height * length * 2 + width * length * cover) * (coefficient / 1000) + (width + height + length) * 2)).toInt()
-            return "$result грн"
-        }
     }
 
     private fun setEditTextError() {
@@ -119,6 +171,12 @@ class PriceBasketFragment : Fragment() {
             if (etLength.text.isNullOrEmpty()) etLength.error = getString(R.string.error)
             if (etWidth.text.isNullOrEmpty()) etWidth.error = getString(R.string.error)
         }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.btResult.windowToken, 0)
     }
 
     private fun clearAllField() = with(binding) {
