@@ -11,7 +11,7 @@ interface NoteItemRepository {
 
     fun editNoteItem(noteItem: NoteItem)
 
-    fun getNoteItem(noteItemId: Int): LiveData<NoteItem>
+    fun getNoteItem(noteItemId: Int): NoteItem
 
     fun getNoteItemList(): LiveData<List<NoteItem>>
 }

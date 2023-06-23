@@ -6,7 +6,7 @@ import com.example.rotangcalculator.domain.models.NoteItem
 class GetNoteItemUseCase(
     private val repository: NoteItemRepository
 ) {
-    operator fun invoke(): LiveData<List<NoteItem>> {
-        return repository.getNoteItemList()
+    operator fun invoke(noteItemId: Int) : NoteItem {
+        return repository.getNoteItem(noteItemId)
     }
 }
