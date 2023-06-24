@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.rotangcalculator.R
 import com.example.rotangcalculator.databinding.FragmentLengthSizeBinding
@@ -86,7 +87,28 @@ class LengthSizeFragment : Fragment() {
             }
 
             saveButton.setOnClickListener {
-                showSaveNotDialogFragment()
+                val validateFields = viewModel.validateFields(
+                    highDiameterField = etHighDiameter.text.toString(),
+                    lowerDiameterField = etLowerDiameter.text.toString(),
+                    lengthField = etLength.text.toString(),
+                    widthField = etWidth.text.toString(),
+                    numberField = etNumber.text.toString()
+                )
+
+                if (validateFields) {
+                    val resultField = binding.textViewResult.text.toString()
+                    if (resultField.isEmpty()) {
+                        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputMethodManager.hideSoftInputFromWindow(binding.saveButton.windowToken, 0)
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.save_warning),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    }
+                    showSaveNotDialogFragment()
+                }
             }
 
             icBack.setOnClickListener {
@@ -109,7 +131,22 @@ class LengthSizeFragment : Fragment() {
     private fun setupSaveNoteDialogListener() {
         val listener: SaveNoteDialogListener = { requestKey, noteTitle ->
             if (requestKey == LENGTH_SIZE_REQUEST_KEY) {
-                binding.textViewResult.text = noteTitle
+                with(binding) {
+                    viewModel.saveNoteItem(
+                        title = noteTitle,
+                        result = textViewResult.text.toString(),
+                        highDiameterField = etHighDiameter.text.toString(),
+                        lowerDiameterField = etLowerDiameter.text.toString(),
+                        lengthField = etLength.text.toString(),
+                        widthField = etWidth.text.toString(),
+                        numberField = etNumber.text.toString()
+                    )
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.note_is_saved),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
         SaveNoteDialogFragment.setupListener(

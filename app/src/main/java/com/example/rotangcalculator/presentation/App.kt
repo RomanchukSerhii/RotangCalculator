@@ -1,11 +1,10 @@
 package com.example.rotangcalculator.presentation
 
 import android.app.Application
-import com.example.rotangcalculator.di.components.ApplicationComponents
-import com.example.rotangcalculator.di.components.DaggerApplicationComponents
+import com.example.rotangcalculator.di.components.DaggerApplicationComponent
 
 class App : Application() {
-    val component: ApplicationComponents by lazy {
-        DaggerApplicationComponents.create()
+    val component by lazy {
+        DaggerApplicationComponent.factory().create(this)
     }
 }

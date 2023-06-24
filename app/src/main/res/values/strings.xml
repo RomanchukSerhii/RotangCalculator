@@ -31,4 +31,6 @@
     <string name="dialog_error">Вкажіть назву нотатки!</string>
     <string name="save">Зберегти</string>
     <string name="cancel">Відміна</string>
+    <string name="save_warning">Перед збереженням натисніть кнопку "Розрахувати"</string>
+    <string name="note_is_saved">Нотатку збережено</string>
 </resources>
