@@ -53,6 +53,7 @@ class LengthSizeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setClickListeners()
+        setupSaveNoteDialogListener()
     }
 
     override fun onDestroyView() {
@@ -83,13 +84,40 @@ class LengthSizeFragment : Fragment() {
                 )
                 hideKeyboard()
             }
+
+            saveButton.setOnClickListener {
+                showSaveNotDialogFragment()
+            }
+
             icBack.setOnClickListener {
                 requireActivity().supportFragmentManager.popBackStack()
             }
+
             icClear.setOnClickListener {
                 clearAllField()
             }
         }
+    }
+
+    private fun showSaveNotDialogFragment() {
+        SaveNoteDialogFragment.show(
+            parentFragmentManager,
+            LENGTH_SIZE_REQUEST_KEY
+        )
+    }
+
+    private fun setupSaveNoteDialogListener() {
+        val listener: SaveNoteDialogListener = { requestKey, noteTitle ->
+            if (requestKey == LENGTH_SIZE_REQUEST_KEY) {
+                binding.textViewResult.text = noteTitle
+            }
+        }
+        SaveNoteDialogFragment.setupListener(
+            parentFragmentManager,
+            viewLifecycleOwner,
+            LENGTH_SIZE_REQUEST_KEY,
+            listener
+        )
     }
 
     private fun setEditTextError() {
@@ -119,6 +147,7 @@ class LengthSizeFragment : Fragment() {
     }
 
     companion object {
+        private const val LENGTH_SIZE_REQUEST_KEY = "LENGTH_SIZE_REQUEST_KEY"
         fun newInstance(): LengthSizeFragment {
             return LengthSizeFragment()
         }

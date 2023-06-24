@@ -102,28 +102,6 @@ class PriceBasketFragment : Fragment() {
                 hideKeyboard()
             }
 
-            withCover.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    viewModel.calculate(
-                        cover = if (withCover.isChecked) 2 else 1,
-                        heightField = etHeight.text.toString(),
-                        widthField = etWidth.text.toString(),
-                        lengthField = etLength.text.toString(),
-                        coefficient = (progres + 100).toDouble()
-                    )
-                    hideKeyboard()
-                } else {
-                    viewModel.calculate(
-                        cover = if (withCover.isChecked) 2 else 1,
-                        heightField = etHeight.text.toString(),
-                        widthField = etWidth.text.toString(),
-                        lengthField = etLength.text.toString(),
-                        coefficient = (progres + 100).toDouble()
-                    )
-                    hideKeyboard()
-                }
-            }
-
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tilHighDiameter"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:contentDescription="@string/hint_high_diameter"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    app:boxBackgroundMode="outline"
+    app:boxStrokeColor="#845442"
+    app:endIconMode="clear_text"
+    app:helperTextTextColor="@color/content"
+    app:hintTextColor="#845442">
+
+<EditText
+    android:id="@+id/etNoteTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/roboto_regular"
+    android:hint="@string/note_name"
+    android:imeOptions="actionNext"
+    android:importantForAutofill="no"
+    android:inputType="numberDecimal"
+    android:minHeight="48dp"
+    android:textCursorDrawable="@drawable/color_cursor"
+    android:textSize="15sp"
+    android:layout_marginBottom="16dp"
+    tools:ignore="SpeakableTextPresentCheck" />
+</com.google.android.material.textfield.TextInputLayout>

@@ -5,13 +5,13 @@ import com.example.rotangcalculator.domain.models.NoteItem
 
 interface NoteListRepository {
 
-    fun addNoteItem(noteItem: NoteItem)
+    suspend fun addNoteItem(noteItem: NoteItem)
 
-    fun deleteNoteItem(noteItem: NoteItem)
+    suspend fun deleteNoteItem(noteItem: NoteItem)
 
-    fun editNoteItem(noteItem: NoteItem)
+    suspend fun editNoteItem(noteItem: NoteItem)
 
-    fun getNoteItem(noteItemId: Int): NoteItem
+    suspend fun getNoteItem(noteItemId: Int): NoteItem
 
     fun getNoteItemList(): LiveData<List<NoteItem>>
 }

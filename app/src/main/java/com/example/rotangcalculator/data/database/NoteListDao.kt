@@ -15,11 +15,11 @@ interface NoteListDao {
     fun getNoteList(): LiveData<List<NoteItemDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addNoteItem(noteItemDbModel: NoteItemDbModel)
+    suspend fun addNoteItem(noteItemDbModel: NoteItemDbModel)
 
     @Query("DELETE FROM notes WHERE id=:noteItemId")
-    fun deleteNoteItem(noteItemId: Int)
+    suspend fun deleteNoteItem(noteItemId: Int)
 
     @Query("SELECT * FROM notes WHERE id=:noteItemId LIMIT 1")
-    fun getNoteItem(noteItemId: Int): NoteItemDbModel
+    suspend fun getNoteItem(noteItemId: Int): NoteItemDbModel
 }
