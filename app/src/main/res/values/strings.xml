@@ -27,8 +27,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="note_name">Назва нотатки</string>
     <string name="dialog_title">Зберегти нотатку?</string>
-    <string name="dialog_message">Вкажіть назву під якою буде збережена нотатка</string>
+    <string name="dialog_message">Вкажіть назву під якою буде збережена нотатка.</string>
     <string name="dialog_error">Вкажіть назву нотатки!</string>
     <string name="save">Зберегти</string>
-    <string name="cancel">Відмінити</string>
+    <string name="cancel">Відміна</string>
 </resources>

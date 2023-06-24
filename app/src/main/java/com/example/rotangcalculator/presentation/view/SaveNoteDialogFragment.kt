@@ -7,6 +7,8 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -29,19 +31,18 @@ class SaveNoteDialogFragment : DialogFragment() {
         val dialogBinding = PartNoteTitleInputBinding.inflate(layoutInflater)
         dialogBinding.etNoteTitle.setText(noteTitle)
 
+
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.dialog_title))
             .setMessage(getString(R.string.dialog_message))
             .setView(dialogBinding.root)
-            .setPositiveButton(getString(R.string.save), null)
-            .setNegativeButton(getString(R.string.cancel), null)
             .create()
 
         dialog.setOnShowListener {
             dialogBinding.etNoteTitle.requestFocus()
             showKeyboard(dialogBinding.etNoteTitle)
 
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+            dialogBinding.saveButton.setOnClickListener {
                 val enteredText = dialogBinding.etNoteTitle.text.toString()
                 if (enteredText.isBlank()) {
                     dialogBinding.etNoteTitle.error = getString(R.string.dialog_error)
@@ -54,6 +55,10 @@ class SaveNoteDialogFragment : DialogFragment() {
                 )
                 dismiss()
             }
+
+            dialogBinding.cancelButton.setOnClickListener {
+                dismiss()
+            }
         }
 
         dialog.setOnDismissListener { hideKeyboard(dialogBinding.etNoteTitle) }
@@ -61,7 +66,9 @@ class SaveNoteDialogFragment : DialogFragment() {
     }
 
     private fun showKeyboard(view: View) {
-        getInputMethodManager(view).showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        view.post {
+            getInputMethodManager(view).showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
 
     private fun hideKeyboard(view: View) {

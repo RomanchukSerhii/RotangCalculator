@@ -1,32 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tilHighDiameter"
-    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:contentDescription="@string/hint_high_diameter"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    app:boxBackgroundMode="outline"
-    app:boxStrokeColor="#845442"
-    app:endIconMode="clear_text"
-    app:helperTextTextColor="@color/content"
-    app:hintTextColor="#845442">
+    android:layout_height="wrap_content">
 
-<EditText
-    android:id="@+id/etNoteTitle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/roboto_regular"
-    android:hint="@string/note_name"
-    android:imeOptions="actionNext"
-    android:importantForAutofill="no"
-    android:inputType="numberDecimal"
-    android:minHeight="48dp"
-    android:textCursorDrawable="@drawable/color_cursor"
-    android:textSize="15sp"
-    android:layout_marginBottom="16dp"
-    tools:ignore="SpeakableTextPresentCheck" />
-</com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNoteTitle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/hint_high_diameter"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="8dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#845442"
+        app:endIconMode="clear_text"
+        app:helperTextTextColor="@color/content"
+        app:hintTextColor="#845442"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etNoteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="@string/note_name"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="15sp"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="22dp"
+        android:backgroundTint="#845442"
+        android:fontFamily="@font/roboto_regular"
+        android:paddingStart="16dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="10dp"
+        android:text="@string/save"
+        android:textColor="#F9F4EA"
+        android:textStyle="bold"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilNoteTitle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/cancel"
+        android:textAllCaps="true"
+        android:textColor="@color/content"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/save_button"
+        app:layout_constraintEnd_toStartOf="@id/save_button"
+        app:layout_constraintTop_toTopOf="@id/save_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>
