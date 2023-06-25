@@ -36,4 +36,11 @@
     <string name="note_list">Список нотаток</string>
     <string name="edit_button">Edit button</string>
     <string name="delete_button">Delete Button</string>
+    <string name="tv_high_diameter">Окружність зверху: %d см</string>
+    <string name="tv_lower_diameter">Окружність знизу: %d см</string>
+    <string name="tv_length">Довжина стояка: %d см</string>
+    <string name="tv_width">Ширина ротанга: %.2f см</string>
+    <string name="tv_number">Кількість стояків: %d</string>
+    <string name="line_length">Довжина лінії:</string>
+    <string name="tv_result">%d см</string>
 </resources>
