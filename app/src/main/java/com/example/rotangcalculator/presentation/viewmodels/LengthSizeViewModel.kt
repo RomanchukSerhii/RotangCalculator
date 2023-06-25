@@ -84,7 +84,7 @@ class LengthSizeViewModel @Inject constructor(
                 number = numberField.toDouble()
             )
             viewModelScope.launch {
-                addNoteItemUseCase.invoke(noteItem)
+                addNoteItemUseCase(noteItem)
             }
         }
     }
