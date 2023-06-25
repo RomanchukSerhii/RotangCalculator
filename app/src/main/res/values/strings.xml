@@ -26,8 +26,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="note_name">Назва нотатки</string>
-    <string name="dialog_title">Зберегти нотатку?</string>
+    <string name="dialog_title">Збереження нотатки</string>
+    <string name="delete_dialog_title">Видалення нотатки</string>
     <string name="dialog_message">Вкажіть назву під якою буде збережена нотатка.</string>
+    <string name="delete_dialog_message">Ви дійсно бажаєте видалити цей запис назавжди?</string>
     <string name="dialog_error">Вкажіть назву нотатки!</string>
     <string name="save">Зберегти</string>
     <string name="cancel">Відміна</string>
@@ -39,7 +41,7 @@
     <string name="tv_high_diameter">Окружність зверху: %d см</string>
     <string name="tv_lower_diameter">Окружність знизу: %d см</string>
     <string name="tv_length">Довжина стояка: %d см</string>
-    <string name="tv_width">Ширина ротанга: %.2f см</string>
+    <string name="tv_width">Ширина ротанга: %s см</string>
     <string name="tv_number">Кількість стояків: %d</string>
     <string name="line_length">Довжина лінії:</string>
     <string name="tv_result">%d см</string>

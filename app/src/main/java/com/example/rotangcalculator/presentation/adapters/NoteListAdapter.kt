@@ -22,7 +22,7 @@ class NoteListAdapter(
         binding.root.setOnClickListener(this)
         binding.deleteButton.setOnClickListener(this)
         binding.editButton.setOnClickListener(this)
-        return NoteItemViewHolder(binding)
+        return NoteItemViewHolder(binding, parent.context)
     }
 
     override fun onBindViewHolder(holder: NoteItemViewHolder, position: Int) {

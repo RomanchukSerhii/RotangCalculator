@@ -118,6 +118,14 @@ class LengthSizeFragment : Fragment() {
             icClear.setOnClickListener {
                 clearAllField()
             }
+
+            openNoteListButton.setOnClickListener {
+                val fragment = NoteListFragment.newInstance()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 
