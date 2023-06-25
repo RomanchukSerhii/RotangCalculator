@@ -11,15 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RotangCalculator">
         <activity
-            android:name=".presentation.ResultActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.PriceActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.LengthSizeActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.view.MainActivity"
             android:exported="true">
             <intent-filter>

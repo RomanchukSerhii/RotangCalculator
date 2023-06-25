@@ -33,4 +33,7 @@
     <string name="cancel">Відміна</string>
     <string name="save_warning">Перед збереженням натисніть кнопку "Розрахувати"</string>
     <string name="note_is_saved">Нотатку збережено</string>
+    <string name="note_list">Список нотаток</string>
+    <string name="edit_button">Edit button</string>
+    <string name="delete_button">Delete Button</string>
 </resources>
