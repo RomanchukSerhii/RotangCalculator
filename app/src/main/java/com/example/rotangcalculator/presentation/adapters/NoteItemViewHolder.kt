@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rotangcalculator.databinding.NoteItemBinding
 import com.example.rotangcalculator.domain.models.NoteItem
 
-class NoteItemViewModel(
+class NoteItemViewHolder(
     private val binding: NoteItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(noteItem: NoteItem) {
@@ -16,6 +16,10 @@ class NoteItemViewModel(
             tvWidth.text = noteItem.width.toString()
             tvNumber.text = noteItem.number.toString()
             tvResultValue.text = noteItem.result
+
+            itemView.tag = noteItem
+            editButton.tag = noteItem
+            deleteButton.tag = noteItem
         }
     }
 }
