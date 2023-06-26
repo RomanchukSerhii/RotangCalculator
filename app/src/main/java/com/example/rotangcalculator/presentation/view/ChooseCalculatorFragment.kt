@@ -38,7 +38,7 @@ class ChooseCalculatorFragment : Fragment() {
         }
 
         binding.buttonLengthSize.setOnClickListener {
-            val fragment = LengthSizeFragment.newInstance()
+            val fragment = LengthSizeFragment.newInstanceAddMode()
             parentFragmentManager.beginTransaction()
                 .addToBackStack(null)
                 .replace(R.id.fragment_container, fragment)

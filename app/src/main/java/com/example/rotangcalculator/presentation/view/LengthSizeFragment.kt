@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import com.example.rotangcalculator.R
 import com.example.rotangcalculator.databinding.FragmentLengthSizeBinding
+import com.example.rotangcalculator.domain.models.NoteItem
 import com.example.rotangcalculator.presentation.App
 import com.example.rotangcalculator.presentation.viewmodels.Error
 import com.example.rotangcalculator.presentation.viewmodels.LengthSizeViewModel
@@ -36,9 +38,17 @@ class LengthSizeFragment : Fragment() {
         (requireActivity().application as App).component
     }
 
+    private var screenMode: String = MODE_UNKNOWN
+    private var noteItemId: Int = NoteItem.UNDEFINED_ID
+
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parseParams()
     }
 
     override fun onCreateView(
@@ -52,6 +62,7 @@ class LengthSizeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        launchRightMode()
         observeViewModel()
         setClickListeners()
         setupSaveNoteDialogListener()
@@ -62,6 +73,12 @@ class LengthSizeFragment : Fragment() {
         super.onDestroyView()
     }
 
+    private fun launchRightMode() {
+        if (screenMode == MODE_EDIT) {
+            viewModel.getNoteItem(noteItemId)
+        }
+    }
+
     private fun observeViewModel() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -69,6 +86,16 @@ class LengthSizeFragment : Fragment() {
                 is Result -> {
                     binding.textViewResult.text = state.result
                 }
+            }
+        }
+
+        viewModel.noteItem.observe(viewLifecycleOwner) { noteItem ->
+            with(binding) {
+                etHighDiameter.setText(noteItem.highDiameter.toString())
+                etLowerDiameter.setText(noteItem.lowerDiameter.toString())
+                etLength.setText(noteItem.length.toString())
+                etWidth.setText(noteItem.width.toString())
+                etNumber.setText(noteItem.number.toString())
             }
         }
     }
@@ -191,10 +218,50 @@ class LengthSizeFragment : Fragment() {
         inputMethodManager.hideSoftInputFromWindow(binding.btResult.windowToken, 0)
     }
 
+    private fun parseParams() {
+        val args = requireArguments()
+        if (!args.containsKey(ARG_SCREEN_MODE)) {
+            throw RuntimeException("Param screen mode is absent")
+        }
+
+        val mode = args.getString(ARG_SCREEN_MODE)
+        if (mode != MODE_ADD && mode != MODE_EDIT) {
+            throw RuntimeException("Unknown screen mode: $mode")
+        }
+        screenMode = mode
+
+        if (screenMode == MODE_EDIT) {
+            if (!args.containsKey(ARG_NOTE_ID)) {
+                throw RuntimeException("Note item id is absent")
+            }
+            noteItemId = args.getInt(ARG_NOTE_ID)
+        }
+
+    }
+
     companion object {
         private const val LENGTH_SIZE_REQUEST_KEY = "LENGTH_SIZE_REQUEST_KEY"
-        fun newInstance(): LengthSizeFragment {
-            return LengthSizeFragment()
+        private const val ARG_SCREEN_MODE = "ARG_SCREEN_MODE"
+        private const val ARG_NOTE_ID = "ARG_NOTE_ID"
+        private const val MODE_EDIT = "MODE_EDIT"
+        private const val MODE_ADD = "MODE_ADD"
+        private const val MODE_UNKNOWN = "MODE_UNKNOWN"
+
+        fun newInstanceAddMode(): LengthSizeFragment {
+            return LengthSizeFragment().apply {
+                arguments = bundleOf(
+                    ARG_SCREEN_MODE to MODE_ADD
+                )
+            }
+        }
+
+        fun newInstanceEditMode(noteItemId: Int): LengthSizeFragment {
+            return LengthSizeFragment().apply {
+                arguments = bundleOf(
+                    ARG_SCREEN_MODE to MODE_EDIT,
+                    ARG_NOTE_ID to noteItemId
+                )
+            }
         }
     }
 }

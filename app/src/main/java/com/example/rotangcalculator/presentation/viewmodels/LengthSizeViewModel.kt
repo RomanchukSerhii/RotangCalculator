@@ -6,16 +6,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rotangcalculator.domain.models.NoteItem
 import com.example.rotangcalculator.domain.repositories.AddNoteItemUseCase
+import com.example.rotangcalculator.domain.repositories.GetNoteItemUseCase
 import com.example.rotangcalculator.presentation.viewmodels.Result
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LengthSizeViewModel @Inject constructor(
-    private val addNoteItemUseCase: AddNoteItemUseCase
+    private val addNoteItemUseCase: AddNoteItemUseCase,
+    private val getNoteItemUseCase: GetNoteItemUseCase
 ) : ViewModel() {
 
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> = _state
+
+    private val _noteItem = MutableLiveData<NoteItem>()
+    val noteItem: LiveData<NoteItem> = _noteItem
 
     fun calculate(
         highDiameterField: String,
@@ -55,6 +60,12 @@ class LengthSizeViewModel @Inject constructor(
             _state.value = Error
             false
         } else true
+    }
+
+    fun getNoteItem(noteItemId: Int) {
+        viewModelScope.launch {
+            _noteItem.value = getNoteItemUseCase(noteItemId)
+        }
     }
 
     fun saveNoteItem(

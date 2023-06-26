@@ -11,7 +11,7 @@ import com.example.rotangcalculator.domain.models.NoteItem
 
 class NoteListAdapter(
     private val actionListener: NoteItemActionListener
-) : ListAdapter<NoteItem, NoteItemViewHolder>(DiffCallback), View.OnClickListener {
+) : ListAdapter<NoteItem, NoteItemViewHolder>(DiffCallback), View.OnClickListener, View.OnLongClickListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteItemViewHolder {
         val binding = NoteItemBinding.inflate(
@@ -19,7 +19,7 @@ class NoteListAdapter(
             parent,
             false
         )
-        binding.root.setOnClickListener(this)
+        binding.root.setOnLongClickListener(this)
         binding.deleteButton.setOnClickListener(this)
         binding.editButton.setOnClickListener(this)
         return NoteItemViewHolder(binding, parent.context)
@@ -39,10 +39,15 @@ class NoteListAdapter(
             R.id.delete_button -> {
                 actionListener.onNoteItemDelete(noteItem)
             }
-            else -> {
-                actionListener.onNoteItemEdit(noteItem)
-            }
         }
+    }
+
+    override fun onLongClick(v: View): Boolean {
+        val noteItem = v.tag as NoteItem
+        when(v.id) {
+            else -> actionListener.onNoteItemEdit(noteItem)
+        }
+        return true
     }
 
     companion object {
@@ -56,4 +61,6 @@ class NoteListAdapter(
             }
         }
     }
+
+
 }

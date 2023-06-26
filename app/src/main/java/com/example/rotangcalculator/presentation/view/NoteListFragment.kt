@@ -69,7 +69,11 @@ class NoteListFragment : Fragment() {
             }
 
             override fun onNoteItemEdit(noteItem: NoteItem) {
-                TODO("Not yet implemented")
+                val fragment = LengthSizeFragment.newInstanceEditMode(noteItem.id)
+                parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.fragment_container, fragment)
+                    .commit()
             }
 
             override fun onNoteItemEditTitle(noteItem: NoteItem) {
