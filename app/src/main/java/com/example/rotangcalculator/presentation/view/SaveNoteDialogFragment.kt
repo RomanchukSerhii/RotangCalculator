@@ -5,8 +5,10 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -32,7 +34,6 @@ class SaveNoteDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogBinding = PartNoteTitleInputBinding.inflate(layoutInflater)
-        dialogBinding.etNoteTitle.setText(noteTitle)
 
 
         val dialog = AlertDialog.Builder(requireContext())
@@ -43,7 +44,13 @@ class SaveNoteDialogFragment : DialogFragment() {
 
         dialog.setOnShowListener {
             with(dialogBinding) {
-                etNoteTitle.setText(noteTitle)
+                if (savedInstanceState == null) {
+                    etNoteTitle.setText(noteTitle)
+                } else {
+                    val inputTitle = savedInstanceState.getString(KEY_INPUT_TITLE)
+                    Log.d("TAG", inputTitle.toString())
+                    etNoteTitle.setText(inputTitle)
+                }
                 etNoteTitle.requestFocus()
                 etNoteTitle.setSelection(etNoteTitle.text.length)
                 showKeyboard(dialogBinding.etNoteTitle)
@@ -74,6 +81,12 @@ class SaveNoteDialogFragment : DialogFragment() {
         return dialog
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val inputTitle = dialog?.findViewById<EditText>(R.id.etNoteTitle)
+        outState.putString(KEY_INPUT_TITLE, inputTitle?.text.toString())
+    }
+
     private fun showKeyboard(view: View) {
         view.post {
             getInputMethodManager(view).showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
@@ -94,6 +107,7 @@ class SaveNoteDialogFragment : DialogFragment() {
         private const val ARG_REQUEST_KEY = "ARG_REQUEST_KEY"
         private const val ARG_NOTE_TITLE = "ARG_NOTE_TITLE"
         private const val ARG_NOTE_ID = "ARG_NOTE_ID"
+        private const val KEY_INPUT_TITLE = "KEY_INPUT_TITLE"
         private const val KEY_INPUT_TITLE_RESPONSE = "KEY_INPUT_TITLE_RESPONSE"
         private const val KEY_INPUT_ID_RESPONSE = "KEY_INPUT_ID_RESPONSE"
 
