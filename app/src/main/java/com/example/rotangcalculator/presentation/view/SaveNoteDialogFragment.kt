@@ -17,7 +17,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.example.rotangcalculator.R
 import com.example.rotangcalculator.databinding.PartNoteTitleInputBinding
 
-typealias SaveNoteDialogListener = (requestKey: String, noteTitle: String) -> Unit
+typealias SaveNoteDialogListener = (requestKey: String, noteTitle: String, noteId: Int) -> Unit
 
 class SaveNoteDialogFragment : DialogFragment() {
 
@@ -26,6 +26,9 @@ class SaveNoteDialogFragment : DialogFragment() {
 
     private val noteTitle: String
         get() = requireArguments().getString(ARG_NOTE_TITLE) ?: ""
+
+    private val noteId: Int
+        get() = requireArguments().getInt(ARG_NOTE_ID)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogBinding = PartNoteTitleInputBinding.inflate(layoutInflater)
@@ -39,26 +42,32 @@ class SaveNoteDialogFragment : DialogFragment() {
             .create()
 
         dialog.setOnShowListener {
-            dialogBinding.etNoteTitle.requestFocus()
-            showKeyboard(dialogBinding.etNoteTitle)
+            with(dialogBinding) {
+                etNoteTitle.setText(noteTitle)
+                etNoteTitle.requestFocus()
+                etNoteTitle.setSelection(etNoteTitle.text.length)
+                showKeyboard(dialogBinding.etNoteTitle)
 
-            dialogBinding.saveButton.setOnClickListener {
-                val enteredText = dialogBinding.etNoteTitle.text.toString()
-                if (enteredText.isBlank()) {
-                    dialogBinding.etNoteTitle.error = getString(R.string.dialog_error)
-                    return@setOnClickListener
-                }
-                parentFragmentManager.setFragmentResult(
-                    requestKey, bundleOf(
-                        KEY_INPUT_TITLE_RESPONSE to enteredText
+                dialogBinding.saveButton.setOnClickListener {
+                    val enteredText = etNoteTitle.text.toString()
+                    if (enteredText.isBlank()) {
+                        etNoteTitle.error = getString(R.string.dialog_error)
+                        return@setOnClickListener
+                    }
+                    parentFragmentManager.setFragmentResult(
+                        requestKey, bundleOf(
+                            KEY_INPUT_TITLE_RESPONSE to enteredText,
+                            KEY_INPUT_ID_RESPONSE to noteId
+                        )
                     )
-                )
-                dismiss()
+                    dismiss()
+                }
+
+                cancelButton.setOnClickListener {
+                    dismiss()
+                }
             }
 
-            dialogBinding.cancelButton.setOnClickListener {
-                dismiss()
-            }
         }
 
         dialog.setOnDismissListener { hideKeyboard(dialogBinding.etNoteTitle) }
@@ -84,13 +93,21 @@ class SaveNoteDialogFragment : DialogFragment() {
         private val TAG = SaveNoteDialogFragment::class.java.simpleName
         private const val ARG_REQUEST_KEY = "ARG_REQUEST_KEY"
         private const val ARG_NOTE_TITLE = "ARG_NOTE_TITLE"
+        private const val ARG_NOTE_ID = "ARG_NOTE_ID"
         private const val KEY_INPUT_TITLE_RESPONSE = "KEY_INPUT_TITLE_RESPONSE"
+        private const val KEY_INPUT_ID_RESPONSE = "KEY_INPUT_ID_RESPONSE"
 
-        fun show(manager: FragmentManager, requestKey: String, noteTitle: String = "") {
+        fun show(
+            manager: FragmentManager,
+            requestKey: String,
+            noteTitle: String = "",
+            noteId: Int = 0
+        ) {
             val dialogFragment = SaveNoteDialogFragment()
             dialogFragment.arguments = bundleOf(
                 ARG_REQUEST_KEY to requestKey,
-                ARG_NOTE_TITLE to noteTitle
+                ARG_NOTE_TITLE to noteTitle,
+                ARG_NOTE_ID to noteId
             )
             dialogFragment.show(manager, TAG)
         }
@@ -105,7 +122,11 @@ class SaveNoteDialogFragment : DialogFragment() {
                 requestKey,
                 lifecycleOwner,
                 FragmentResultListener { key, result ->
-                    listener.invoke(key, result.getString(KEY_INPUT_TITLE_RESPONSE) ?: "")
+                    listener.invoke(
+                        key,
+                        result.getString(KEY_INPUT_TITLE_RESPONSE) ?: "",
+                        result.getInt(KEY_INPUT_ID_RESPONSE)
+                    )
                 }
             )
         }

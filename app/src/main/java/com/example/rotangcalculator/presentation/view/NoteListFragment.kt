@@ -25,42 +25,13 @@ class NoteListFragment : Fragment() {
     private val binding: FragmentNoteListBinding
         get() = _binding ?: throw RuntimeException("FragmentNoteListBinding is null")
 
-    private val noteListAdapter: NoteListAdapter by lazy {
-        NoteListAdapter(object : NoteItemActionListener {
-            override fun onNoteItemDelete(noteItem: NoteItem) {
-                val listener = DialogInterface.OnClickListener { _, which ->
-                    when (which) {
-                        DialogInterface.BUTTON_POSITIVE ->
-                            viewModel.deleteNoteItem(noteItem)
-                    }
-                }
-                val dialog = AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.delete_dialog_title)
-                    .setMessage(R.string.delete_dialog_message)
-                    .setPositiveButton("Так", listener)
-                    .setNegativeButton("Ні", null)
-                    .setCancelable(true)
-                    .create()
-
-                dialog.setOnShowListener {
-                    dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-                        .setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_accent))
-                }
-                dialog.show()
-            }
-
-            override fun onNoteItemEdit(noteItem: NoteItem) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onNoteItemEditTitle(noteItem: NoteItem) {
-                TODO("Not yet implemented")
-            }
-        })
-    }
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
+    private val noteListAdapter: NoteListAdapter by lazy {
+        val actionListener = getNoteItemActionListener()
+        NoteListAdapter(actionListener)
+    }
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[NoteListViewModel::class.java]
@@ -87,7 +58,71 @@ class NoteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
+        setupSaveNoteDialogListener()
         binding.recyclerView.adapter = noteListAdapter
+    }
+
+    private fun getNoteItemActionListener(): NoteItemActionListener {
+        return object : NoteItemActionListener {
+            override fun onNoteItemDelete(noteItem: NoteItem) {
+                showDeleteDialog(noteItem)
+            }
+
+            override fun onNoteItemEdit(noteItem: NoteItem) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onNoteItemEditTitle(noteItem: NoteItem) {
+                showSaveNoteDialogFragment(noteItem)
+            }
+        }
+    }
+
+    private fun showSaveNoteDialogFragment(noteItem: NoteItem) {
+        SaveNoteDialogFragment.show(
+            parentFragmentManager,
+            NOTE_LIST_REQUEST_KEY,
+            noteItem.title,
+            noteItem.id
+        )
+    }
+
+    private fun setupSaveNoteDialogListener() {
+        val listener: SaveNoteDialogListener = { requestKey, noteTitle, noteId ->
+            if (requestKey == NOTE_LIST_REQUEST_KEY) {
+                viewModel.editNoteTitle(noteId, noteTitle)
+            }
+        }
+        SaveNoteDialogFragment.setupListener(
+            parentFragmentManager,
+            viewLifecycleOwner,
+            NOTE_LIST_REQUEST_KEY,
+            listener
+        )
+    }
+
+    private fun showDeleteDialog(noteItem: NoteItem) {
+        val listener = DialogInterface.OnClickListener { _, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE ->
+                    viewModel.deleteNoteItem(noteItem)
+            }
+        }
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle(R.string.delete_dialog_title)
+            .setMessage(R.string.delete_dialog_message)
+            .setPositiveButton("Так", listener)
+            .setNegativeButton("Ні", null)
+            .setCancelable(true)
+            .create()
+
+        dialog.setOnShowListener {
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_accent))
+        }
+
+        dialog.show()
     }
 
     private fun observeViewModel() {
@@ -102,6 +137,7 @@ class NoteListFragment : Fragment() {
     }
 
     companion object {
+        private const val NOTE_LIST_REQUEST_KEY = "NOTE_LIST_REQUEST_KEY"
         fun newInstance(): NoteListFragment {
             return NoteListFragment()
         }

@@ -137,7 +137,7 @@ class LengthSizeFragment : Fragment() {
     }
 
     private fun setupSaveNoteDialogListener() {
-        val listener: SaveNoteDialogListener = { requestKey, noteTitle ->
+        val listener: SaveNoteDialogListener = { requestKey, noteTitle, _ ->
             if (requestKey == LENGTH_SIZE_REQUEST_KEY) {
                 with(binding) {
                     viewModel.saveNoteItem(

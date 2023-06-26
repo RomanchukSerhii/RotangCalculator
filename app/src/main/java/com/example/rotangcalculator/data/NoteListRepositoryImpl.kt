@@ -1,6 +1,7 @@
 package com.example.rotangcalculator.data
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.map
@@ -16,6 +17,7 @@ class NoteListRepositoryImpl @Inject constructor(
 
 
     override suspend fun addNoteItem(noteItem: NoteItem) {
+        Log.d("NoteTAG", noteItem.id.toString())
         noteListDao.addNoteItem(mapper.mapEntityToDbModel(noteItem))
     }
 
@@ -28,6 +30,8 @@ class NoteListRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getNoteItem(noteItemId: Int): NoteItem {
+
+        Log.d("TAG", noteItemId.toString())
         val dbModel = noteListDao.getNoteItem(noteItemId)
         return mapper.mapDbModelToEntity(dbModel)
     }
