@@ -136,6 +136,14 @@ class PriceBasketFragment : Fragment() {
             icBack.setOnClickListener {
                 requireActivity().supportFragmentManager.popBackStack()
             }
+
+            openNoteListButton.setOnClickListener {
+                val fragment = NoteListFragment.newInstance()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 

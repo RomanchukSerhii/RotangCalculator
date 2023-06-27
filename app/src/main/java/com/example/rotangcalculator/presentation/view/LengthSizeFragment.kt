@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import com.example.rotangcalculator.R
@@ -38,6 +39,13 @@ class LengthSizeFragment : Fragment() {
         (requireActivity().application as App).component
     }
 
+    private val backPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            requireActivity().supportFragmentManager.popBackStack("Main", 0)
+        }
+
+    }
+
     private var screenMode: String = MODE_UNKNOWN
     private var noteItemId: Int = NoteItem.UNDEFINED_ID
 
@@ -57,6 +65,7 @@ class LengthSizeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLengthSizeBinding.inflate(inflater, container, false)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressedCallback)
         return binding.root
     }
 
@@ -139,7 +148,7 @@ class LengthSizeFragment : Fragment() {
             }
 
             icBack.setOnClickListener {
-                requireActivity().supportFragmentManager.popBackStack()
+                requireActivity().supportFragmentManager.popBackStack("Main", 0)
             }
 
             icClear.setOnClickListener {

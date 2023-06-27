@@ -58,8 +58,16 @@ class NoteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
-        setupSaveNoteDialogListener()
+        setupListeners()
         binding.recyclerView.adapter = noteListAdapter
+    }
+
+    private fun setupListeners() {
+        setupSaveNoteDialogListener()
+
+        binding.icBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     private fun getNoteItemActionListener(): NoteItemActionListener {
@@ -131,7 +139,7 @@ class NoteListFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.noteItemList.observe(viewLifecycleOwner) {
-            noteListAdapter.submitList(it)
+            noteListAdapter.submitList(it.sortedBy { note -> note.title })
         }
     }
 

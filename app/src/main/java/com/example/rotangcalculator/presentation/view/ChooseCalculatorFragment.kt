@@ -44,10 +44,24 @@ class ChooseCalculatorFragment : Fragment() {
                 .replace(R.id.fragment_container, fragment)
                 .commit()
         }
+
+        binding.openNoteListButton.setOnClickListener {
+            val fragment = NoteListFragment.newInstance()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object {
+        fun newInstance(): ChooseCalculatorFragment {
+            return ChooseCalculatorFragment()
+        }
     }
 }

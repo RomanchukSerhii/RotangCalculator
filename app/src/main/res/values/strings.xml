@@ -45,4 +45,5 @@
     <string name="tv_number">Кількість стояків: %d</string>
     <string name="line_length">Довжина лінії:</string>
     <string name="tv_result">%d см</string>
+    <string name="note_list_button">Кнопка вибору списку нотаток</string>
 </resources>
